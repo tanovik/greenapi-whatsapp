@@ -6,10 +6,15 @@
   display: flex;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding-left: 4vh;
+  padding-left: 3vw;
   padding-right: 3vw;
   justify-content: space-between;
   flex-direction: row-reverse;
+
+  @media (max-width: 560px) {
+    padding-left: 1vw;
+    padding-right: 1vw;
+  }
 
   &__text-wrapper {
     display: flex;
@@ -22,7 +27,7 @@
   &__text-top {
     margin: 0;
     font-weight: 200;
-    font-family: 4vh;
+    font-size: 4vh;
     color: $color--global-text-light;
   }
   &__text-bottom {
@@ -37,5 +42,9 @@
     font-size: 3vh;
     color: #edf8f5;
     font-weight: 600;
+
+    @media (max-width: 560px) {
+      font-size: 2.5vh;
+    }
   }
 }

@@ -50,7 +50,7 @@ function Login({ onSubmit }) {
                 message: "Должно быть 10 цифр",
               },
             })}
-            defaultValue="1101821335"
+            // defaultValue="1101821335"
             autoComplete="on"
             type="text"
             id="idInstance"
