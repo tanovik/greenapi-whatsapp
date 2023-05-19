@@ -21,9 +21,9 @@ function App() {
   const [senderName, setSenderName] = useState("");
 
   // Логика авторизации: если инстанс статус authorized, то открываем чат.
-  const handleLogin = (data) => {
-    // Установка номера в состояние phoneNumber
-    setPhoneNumber(data.phoneNumber);
+  const handleLogin = async (data) => {
+    // Очистим хранилище после прошлой сессии
+    localStorage.clear();
     // Приведение номера к формату ********@c.us и сохранение всех данных в localStorage
     localStorage.setItem(
       "phoneNumber",
@@ -31,20 +31,18 @@ function App() {
     );
     localStorage.setItem("idInstance", data.idInstance);
     localStorage.setItem("apiTokenInstance", data.apiTokenInstance);
-    // Проверяем статус инстанса
-    getUserStatus("getStateInstance")
-      .then((data) => {
-        return data.stateInstance;
-      })
-      .then((stateInstance) => {
-        if (stateInstance === "authorized") {
-          setIsLoggedIn(true);
-        }
-        return;
-      })
-      .catch((error) => {
-        console.error("Ошибка при выполнении функции getUserStatus:", error);
-      });
+    try {
+      // Проверяем статус инстанса
+      const response = await getUserStatus("getStateInstance");
+      const stateInstance = response.stateInstance;
+      if (stateInstance === "authorized") {
+        setIsLoggedIn(true);
+        // Установка номера в состояние phoneNumber
+        setPhoneNumber(data.phoneNumber);
+      }
+    } catch (error) {
+      console.error("Ошибка при выполнении функции getUserStatus:", error);
+    }
   };
 
   // Логика исходящих сообщений
@@ -107,12 +105,14 @@ function App() {
 
   // Запускаем запрос на наличие уведомлений каждые 5 секунд
   useEffect(() => {
-    const intervalId = setInterval(handleReceiveMessage, 5000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+    // Проверяем наличие значений в localStorage
+    if (isLoggedIn === true) {
+      const intervalId = setInterval(handleReceiveMessage, 5000);
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="App">

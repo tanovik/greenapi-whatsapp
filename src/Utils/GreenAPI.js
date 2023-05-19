@@ -1,8 +1,3 @@
-// Данные, сохраненный при авторизации пользователя
-const idInstance = localStorage.getItem("idInstance");
-const apiTokenInstance = localStorage.getItem("apiTokenInstance");
-const chatId = localStorage.getItem("phoneNumber");
-
 // Адрес для запросов
 const URL = (idInstance, apiTokenInstance, action) => {
   return `https://api.green-api.com/waInstance${idInstance}/${action}/${apiTokenInstance}`;
@@ -10,6 +5,8 @@ const URL = (idInstance, apiTokenInstance, action) => {
 
 // Проверяем статус авторизации на console.green-api.com
 export async function getUserStatus(action) {
+  const idInstance = localStorage.getItem("idInstance");
+  const apiTokenInstance = localStorage.getItem("apiTokenInstance");
   try {
     const response = await fetch(URL(idInstance, apiTokenInstance, action));
     const responseData = await response.json();
@@ -25,7 +22,9 @@ export async function getUserStatus(action) {
 
 // Отправка сообщения
 export async function sendMessage(outMessage, action) {
-  /////////////////////// может быть ошибка!!!
+  const idInstance = localStorage.getItem("idInstance");
+  const apiTokenInstance = localStorage.getItem("apiTokenInstance");
+  const chatId = localStorage.getItem("phoneNumber");
   try {
     const response = await fetch(URL(idInstance, apiTokenInstance, action), {
       method: "POST",
@@ -47,6 +46,10 @@ export async function sendMessage(outMessage, action) {
 
 // Получение уведомления (сообщения)
 export async function ReceiveMessage(action) {
+  const idInstance = localStorage.getItem("idInstance");
+  const apiTokenInstance = localStorage.getItem("apiTokenInstance");
+  const chatId = localStorage.getItem("phoneNumber");
+
   let responseData;
   try {
     const response = await fetch(URL(idInstance, apiTokenInstance, action));
