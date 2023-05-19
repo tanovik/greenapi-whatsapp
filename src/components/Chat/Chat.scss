@@ -12,6 +12,12 @@
   padding: 2vh;
   padding-bottom: 3vh;
 
+  @media (max-width: 560px) {
+    padding: 0vh;
+    padding-bottom: 2vh;
+    height: 85vh;
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -31,24 +37,31 @@
     font-size: 1rem;
     list-style-type: none;
 
-    &-item--out {
+    @media (max-width: 560px) {
+      font-size: 0.9rem;
+    }
+
+    &-item {
       border-radius: 10px;
-      background-color: $color--global-dialogue;
       padding: 1vh;
       box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
       display: inline-block;
       max-width: 45%;
+      overflow: hidden;
+
+      @media (max-width: 560px) {
+        max-width: 50%;
+      }
+    }
+
+    &-item--out {
+      background-color: $color--global-dialogue;
       text-align: left;
       align-self: flex-end;
     }
 
     &-item--in {
-      border-radius: 10px;
       background-color: white;
-      padding: 1vh;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: inline-block;
-      max-width: 45%;
       align-self: flex-start;
     }
 
@@ -90,7 +103,7 @@
     color: $color--global-text-light;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-    &:active  {
+    &:active {
       background-color: $color--global-button-active;
     }
   }
