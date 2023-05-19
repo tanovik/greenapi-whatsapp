@@ -36,3 +36,11 @@
 3. Запустить проект в режиме разработки:
 
 ```npm run start```
+<br />
+<br />
+<img src="src/images/demo_chat.png" alt="demo chat" width="400">
+<br />
+<br />
+<img src="src/images/demo_auth.png" alt="demo chat" width="400">
+<br />
+<br />
