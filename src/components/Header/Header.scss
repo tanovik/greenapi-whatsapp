@@ -1,0 +1,41 @@
+@import "../../scss/shared";
+
+.header {
+  background-color: #1ebea5;
+  color: $color--global-text;
+  display: flex;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding-left: 4vh;
+  padding-right: 3vw;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+
+  &__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    margin-bottom: 0.6rem;
+    gap: 0.3rem;
+  }
+
+  &__text-top {
+    margin: 0;
+    font-weight: 200;
+    font-family: 4vh;
+    color: $color--global-text-light;
+  }
+  &__text-bottom {
+    margin: 0;
+    font-weight: 200;
+    font-size: 2vh;
+    color: $color--global-text-light;
+  }
+  &__contact {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 3vh;
+    color: #edf8f5;
+    font-weight: 600;
+  }
+}
