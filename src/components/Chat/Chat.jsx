@@ -22,6 +22,7 @@ function Chat({
                 className={`chat__dialog-window-item chat__dialog-window-item--${message.type}`}
                 key={index}
               >
+                <img src={message.avatar} className="avatar" alt="avatar" />
                 {message.text}
               </li>
             ))}
