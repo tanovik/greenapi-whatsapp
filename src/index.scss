@@ -38,6 +38,7 @@ select {
   appearance: none;
   border: none;
   color: black;
+  line-height: normal !important;
 
   &:focus {
     outline: none;

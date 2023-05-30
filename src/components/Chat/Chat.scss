@@ -4,7 +4,7 @@
   background: #edf8f5;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  height: 80vh;
+  height: 90vh;
   display: flex;
   align-content: center;
   flex-wrap: wrap;
@@ -32,9 +32,9 @@
     justify-content: flex-start;
     height: 100%;
     overflow: auto;
-    padding: 2vh 2vh 2vh 2vh;
-    gap: 3vh;
-    font-size: 1rem;
+    padding: 2vh 2vh 3vh 2vh;
+    gap: 4vh;
+    font-size: 1.2rem;
     list-style-type: none;
 
     @media (max-width: 560px) {
@@ -43,11 +43,23 @@
 
     &-item {
       border-radius: 10px;
-      padding: 1vh;
       box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
       display: inline-block;
       max-width: 45%;
-      overflow: hidden;
+      position: relative;
+      overflow-wrap: break-word;
+      // word-break: break-all;
+      padding: 1vh 1vh 3vh 1vh;
+
+      .avatar {
+        position: absolute;
+        width: 5vh;
+        height: 5vh;
+        bottom: -25px;
+        background-color: #ccc; 
+        border-radius: 50%; 
+        z-index: 1; 
+      }
 
       @media (max-width: 560px) {
         max-width: 50%;
@@ -58,11 +70,19 @@
       background-color: $color--global-dialogue;
       text-align: left;
       align-self: flex-end;
+      
+      .avatar {
+        right: -10px; 
+      }
     }
 
     &-item--in {
       background-color: white;
       align-self: flex-start;
+
+      .avatar {
+        left: -10px; 
+      }
     }
 
     &-text {
@@ -88,6 +108,12 @@
     background: white;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
+    font-size: 1.3rem;
+
+    @media (max-width: 560px) {
+      font-size: 1rem;
+    }
+
     @include input-focus-effect;
   }
 

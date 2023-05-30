@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-import { sendMessage, ReceiveMessage, getUserStatus } from "../Utils/GreenAPI";
+import {
+  sendMessage,
+  ReceiveMessage,
+  getStateInstance,
+  getMyAvatar,
+  getContactInfo,
+  getSettings,
+} from "../Utils/GreenAPI";
 import "./App.scss";
 import Header from "./Header/Header";
 import Login from "./Login/Login";
 import Chat from "./Chat/Chat";
 
 function App() {
-  // Хранит текущий номер телефона
+  // Хранит номер телефона собесендика
   const [phoneNumber, setPhoneNumber] = useState("");
   // Хранит информацию о состоянии авторизации пользователя
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,12 +26,14 @@ function App() {
   const [isButtonActive, setIsButtonActive] = useState(false);
   // Хранит имя отправителя сообщения
   const [senderName, setSenderName] = useState("");
+  // Храним URL аватара собеседника
+  const [contactAvatarUrl, setContactAvatarUrl] = useState();
+  // Храним URL своего аватара.
+  const [myAvatarUrl, setMyAvatarUrl] = useState();
 
   // Логика авторизации: если инстанс статус authorized, то открываем чат.
   const handleLogin = async (data) => {
-    // Очистим хранилище после прошлой сессии
-    localStorage.clear();
-    // Приведение номера к формату ********@c.us и сохранение всех данных в localStorage
+    // Приведение номера к формату ********@c.us и сохранение данных в localStorage
     localStorage.setItem(
       "phoneNumber",
       data.phoneNumber.replace("+", "") + "@c.us"
@@ -33,30 +42,49 @@ function App() {
     localStorage.setItem("apiTokenInstance", data.apiTokenInstance);
     try {
       // Проверяем статус инстанса
-      const response = await getUserStatus("getStateInstance");
-      const stateInstance = response.stateInstance;
-      if (stateInstance === "authorized") {
+      const response = await getStateInstance("getStateInstance");
+      if (response.stateInstance === "authorized") {
+        // Установим состояние авторизации в true
         setIsLoggedIn(true);
         // Установка номера в состояние phoneNumber
         setPhoneNumber(data.phoneNumber);
+        // Получаем информацию о контакте
+        const { name, avatar } = await getContactInfo("getContactInfo");
+        // Устанавливаем полученное URL аватара собеседника в contactAvatarUrl
+        setContactAvatarUrl(avatar);
+        // Устанавливаем полученное имя собеседника в senderName (оно уходит в хедер)
+        setSenderName(name);
+        // Выполняем запрос для получения ownerID
+        const { wid: ownerId } = await getSettings("getSettings");
+        // Записываем ownerId в localStorage
+        localStorage.setItem("ownerId", ownerId);
+        // Устанавливаем полученный адрес аватара собеседника в состояние myAvatarUrl
+        setMyAvatarUrl(await getMyAvatar("GetAvatar"));
       }
     } catch (error) {
-      console.error("Ошибка при выполнении функции getUserStatus:", error);
+      console.error("Ошибка при выполнении функции getStateInstance:", error);
     }
   };
 
-  // Логика исходящих сообщений
-  const handleSendMessage = () => {
-    // Отправляем запрос
-    sendMessage(outMessage, "SendMessage")
-      .then(() => {
-        // Обработка успешного ответа от API
-        setMessages([...messages, { text: outMessage, type: "out" }]); // Добавляем новое сообщение в массив messages
-        setOutMessage(""); // Очищаем поле ввода
-      })
-      .catch((error) => {
-        console.error("Ошибка при отправке сообщения:", error);
-      });
+  // Логика отправки сообщения
+  const handleSendMessage = async () => {
+    try {
+      await sendMessage(outMessage, "SendMessage") // Отправляем сообщенине.
+        .then(() => {
+          // Добавляем новое сообщение в массив messages и передаем ссылку на аватар из состояния myAvatarUrl
+          setMessages([
+            ...messages,
+            { text: outMessage, type: "out", avatar: myAvatarUrl },
+          ]);
+          // Очищаем поле ввода
+          setOutMessage("");
+        })
+        .catch((error) => {
+          console.error("Ошибка при получении ссылки на аватар:", error);
+        });
+    } catch (error) {
+      console.error("Ошибка при отправке сообщения:", error);
+    }
   };
 
   // Нажмем Enter для отправки
@@ -73,7 +101,7 @@ function App() {
   // Логика входящих сообшений (используем pending для сохранения очередности ответов)
   let isRequestPending = false;
 
-  function handleReceiveMessage() {
+  function handleReceiveMessage(avatarUrl) {
     if (!isRequestPending) {
       isRequestPending = true;
       ReceiveMessage("ReceiveNotification")
@@ -82,20 +110,16 @@ function App() {
             isRequestPending = false;
             return;
           }
-          // Извлекаем сообщение и имя отправителя
-          const message = data.textMessage;
-          const senderName = data.senderName;
-          setSenderName(senderName);
           // Используем функцию обновления состояния для гарантии последовательного добавления сообщений
           // Вызов setReceivedMessages будет выполнен после получения нового сообщения
           setMessages((prevMessages) => [
             ...prevMessages,
-            { text: message, type: "in" },
+            { text: data.textMessage, type: "in", avatar: avatarUrl },
           ]);
         })
         .catch((error) => {
           isRequestPending = false;
-          console.error("Ошибка при получении сообщения:", error);
+          console.error("Ошибка при получении входящего сообщения:", error);
         })
         .finally(() => {
           isRequestPending = false;
@@ -105,14 +129,16 @@ function App() {
 
   // Запускаем запрос на наличие уведомлений каждые 5 секунд
   useEffect(() => {
-    // Проверяем наличие значений в localStorage
     if (isLoggedIn === true) {
-      const intervalId = setInterval(handleReceiveMessage, 5000);
+      const intervalId = setInterval(
+        () => handleReceiveMessage(contactAvatarUrl),
+        5000
+      );
       return () => {
         clearInterval(intervalId);
       };
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, contactAvatarUrl]);
 
   return (
     <div className="App">
