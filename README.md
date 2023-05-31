@@ -42,5 +42,3 @@
 <br />
 <br />
 <img src="src/images/demo_auth.png" alt="demo auth" width="400">
-<br />
-<br />
