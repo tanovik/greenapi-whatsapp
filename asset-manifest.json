@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/greenapi-whatsapp/static/css/main.7482dba7.css",
+    "main.js": "/greenapi-whatsapp/static/js/main.97382ae7.js",
+    "static/media/wa-pattern.png": "/greenapi-whatsapp/static/media/wa-pattern.bded4f44087fb4e89252.png",
+    "static/media/icons8-question-96.svg": "/greenapi-whatsapp/static/media/icons8-question-96.7ce85e88d29bc398c84418effacbd973.svg",
+    "static/media/icons8-test-account-96.svg": "/greenapi-whatsapp/static/media/icons8-test-account-96.027413dabf1592441f72358dceba254c.svg",
+    "static/media/arrow.svg": "/greenapi-whatsapp/static/media/arrow.3db2ab099493d820f1c9.svg",
+    "index.html": "/greenapi-whatsapp/index.html",
+    "main.7482dba7.css.map": "/greenapi-whatsapp/static/css/main.7482dba7.css.map",
+    "main.97382ae7.js.map": "/greenapi-whatsapp/static/js/main.97382ae7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7482dba7.css",
+    "static/js/main.97382ae7.js"
+  ]
+}
