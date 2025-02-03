@@ -1,6 +1,6 @@
 {
     "name": "greenapi-whatsapp",
-    "homepage": "https://tanovik.github.io/Green-Api-Whats-App/",
+    "homepage": "https://tanovik.github.io/greenapi-whatsapp/",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
