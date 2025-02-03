@@ -1,0 +1,101 @@
+@use '../../scss/variables' as variables;
+@use '../../scss/mixins' as mixins;
+
+.login {
+    background: #edf8f5;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+
+    &__description-container {
+        margin: 0 auto;
+        width: 80%;
+        padding: 3vh 1vw 0vh 1vw;
+
+        @media (max-width: 560px) {
+            width: 90%;
+        }
+    }
+
+    &__description-img {
+        width: 48px;
+        height: auto;
+    }
+
+    &__description-textarea {
+        background: #edf8f5;
+        resize: none;
+        padding: 1vw;
+        color: variables.$color--global-text;
+        line-height: 1.3;
+        font-weight: 200;
+        font-size: 2.2vh;
+        gap: 2vh;
+        display: flex;
+        flex-direction: column;
+
+        @media (max-width: 560px) {
+            font-size: 2vh;
+        }
+    }
+
+    &__form {
+        width: 80%;
+        padding: 2vh 1vw 2vh 1vw;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: transparent;
+        gap: 4vh;
+
+        @media (max-width: 560px) {
+            width: 90%;
+        }
+
+        &-img {
+            width: 48px;
+            height: auto;
+        }
+    }
+
+    &__input-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        margin-bottom: 7px;
+        font-weight: 200;
+        font-size: 2.1vh;
+
+        @media (max-width: 560px) {
+            font-size: 2vh;
+        }
+    }
+
+    &__input {
+        padding: 1vh;
+        font-size: 2vh;
+        border-radius: 10px;
+        background: white;
+        transition: box-shadow 0.3s ease;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 5px #77d7c8;
+        }
+
+        &-error {
+            @include mixins.error-message_add-paddings-left-top(4.8rem, 0vw);
+        }
+    }
+
+    &__button {
+        @include mixins.button-submit-small();
+        width: 60%;
+        margin: 1vh auto 1vh auto;
+    }
+}

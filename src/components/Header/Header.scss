@@ -1,0 +1,51 @@
+@use '../../scss/variables' as variables;
+@use '../../scss/mixins' as mixins;
+
+.header {
+    background-color: variables.$color--global-header;
+    color: variables.$color--global-text;
+    display: flex;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+
+    @media (max-width: 560px) {
+        padding-left: 1vw;
+        padding-right: 1vw;
+    }
+
+    &__text-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5rem;
+        margin-bottom: 0.6rem;
+        gap: 0.3rem;
+    }
+
+    &__text-top {
+        margin: 0;
+        font-weight: 200;
+        font-size: 4vh;
+        color: variables.$color--global-text-light;
+    }
+    &__text-bottom {
+        margin: 0;
+        font-weight: 200;
+        font-size: 2vh;
+        color: variables.$color--global-text-light;
+    }
+    &__contact {
+        margin-top: auto;
+        margin-bottom: auto;
+        font-size: 3vh;
+        color: #edf8f5;
+        font-weight: 600;
+
+        @media (max-width: 560px) {
+            font-size: 2.5vh;
+        }
+    }
+}
