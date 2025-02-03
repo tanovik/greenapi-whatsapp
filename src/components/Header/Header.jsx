@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-// import './Header.scss'
+import './Header.scss'
 
 function Header({ phoneNumber, senderName }) {
     let headerContent = null

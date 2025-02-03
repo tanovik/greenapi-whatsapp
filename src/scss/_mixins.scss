@@ -1,0 +1,61 @@
+@use 'variables' as variables;
+
+@mixin error-message_add-paddings-left-top($padding-top, $padding-left) {
+    animation: fadeIn 0.5s ease-in-out;
+    color: variables.$color--global-error;
+    font-size: 1.8vh;
+    position: absolute;
+    padding-top: $padding-top;
+    padding-left: $padding-left;
+    max-width: 100%;
+}
+
+@mixin button-submit-small() {
+    font-weight: 200;
+    font-size: 3vh;
+    border-radius: 10px;
+    background-color: variables.$color--global-button;
+    color: variables.$color--global-text-light;
+    border: none;
+    min-height: 6vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    transition: background-color 0.3s ease;
+
+    &:active {
+        background-color: variables.$color--global-button-active;
+    }
+
+    &:hover {
+        background-color: variables.$color--global-header;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@mixin input-focus-effect() {
+    transition: box-shadow 0.3s ease;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 5px variables.$color--global-button-active;
+    }
+}
+
+// Error mixins
+@mixin error-message_add-paddings-left-top($padding-top, $padding-left) {
+    animation: fadeIn 0.5s ease-in-out;
+    color: variables.$color--global-error;
+    font-size: 1.7vh;
+    position: absolute;
+    margin-top: $padding-top;
+    margin-left: $padding-left;
+    max-width: 100%;
+}

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-// import './Login.scss'
+import './Login.scss'
 import Question from '../../images/icons8-question-96.svg'
 import Account from '../../images/icons8-test-account-96.svg'
 
